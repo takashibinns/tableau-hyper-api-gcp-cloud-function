@@ -1,8 +1,17 @@
 # Tableau + GCP: Push data from Cloud Function to Tableau
+![architecture diagram](screenshots/architecture-diagram.png)
 This project shows an example of how a GCP Cloud Function can take data (from a Firestore collection in this example), and push it to Tableau Cloud/Server.  It leverages Tableau Hyper API to create a data extract file, and then uses Tableau's REST APIs to publish that Hyper file as a [published data source](https://help.tableau.com/current/pro/desktop/en-us/publish_datasources_about.htm).  This Cloud Function can be triggered by a Cloud Schedule to automate the process of pushing data.  Since we don't want to push the entire data set every time, our code checks to see if the data source exists in Tableau first and if so we only append new datapoints.
 
+## How this works
+![business logic](screenshots/swimlane-diagram.png)
+The swimlane diagram above outlines the business logic for this sample.  Assuming we have data coming into Firestore, we can define a schedule for often that data should get pushed to Tableau.  The Cloud Function looks for a published data source in Tableau (matched on ds name + project).  
 
-##  Deploying this sample
+If a data source DOES NOT EXIST in Tableau, the Cloud Function will query Firestore for all the data.  Next it will create a hyper extract from this data, and then use the REST API to publish it as a new data source.  
+
+If a data source DOES EXIST in Tableau, the Cloud Function will query Firestore for only *new* data.  It makes a hyper extract from the new data, and uses the REST API to upsert the new data (matching on Document ID, which will always be unique)
+
+
+## Deploying this sample
 To deploy this example automatically, we can use the terraform code included in the setup directory.  
 
 ### Step 0: Prerequisites
