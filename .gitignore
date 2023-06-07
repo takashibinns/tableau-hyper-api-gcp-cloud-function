@@ -161,3 +161,8 @@ cython_debug/
 
 #   Hide sensitive files
 my-gcp-credentials.json
+*.tfvars
+*terraform.tfstate*
+*.terraform.lock*
+*.terraform*
+*cloudfunction.zip*
