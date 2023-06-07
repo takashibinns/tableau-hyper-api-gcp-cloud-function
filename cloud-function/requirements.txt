@@ -1,0 +1,10 @@
+protobuf==4.23.2
+tableauhyperapi==0.0.17002
+tableauserverclient==0.25
+google-api-core==2.11.0
+google-auth==2.19.0
+google-cloud-core==2.3.2
+google-cloud-firestore==2.11.1
+googleapis-common-protos==1.59.0
+Flask==2.3.2
+functions-framework==3.4.0
