@@ -134,9 +134,9 @@ def create_hyper_file(data, filepath, table_name, fields):
             connection.catalog.create_schema(hyper_schema)
 
             #   Create table definitions for each "column" in our event data
-            #def processColumn(field):
-            #    return TableDefinition.Column(field['name'],field['type'])
-            processColumn = lambda field: TableDefinition.Column(field['name'],field['type'])
+            def processColumn(field):
+                return TableDefinition.Column(field['name'],field['type'])
+            #processColumn = lambda field: TableDefinition.Column(field['name'],field['type'])
             columns = map(processColumn,fields)
 
             #   Define the table metadata
@@ -144,6 +144,7 @@ def create_hyper_file(data, filepath, table_name, fields):
 
             #   Create the table
             connection.catalog.create_table(data_table)
+            print(f'[{table_name}] Hyper metadadata created, start inserting rows')
 
             #   Insert data using the `Inserter` class
             with Inserter(connection, data_table) as inserter:
@@ -276,7 +277,9 @@ def main():
     status += f'\nProcess complete in {duration.seconds} seconds'
     return status
 
-main()
+#   When testing locally
+#main()
+
 #   Handle HTTP Request
 @functions_framework.http
 def handle_http(request):
