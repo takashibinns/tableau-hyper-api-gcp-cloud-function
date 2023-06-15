@@ -166,3 +166,4 @@ my-gcp-credentials.json
 *.terraform.lock*
 *.terraform*
 *cloudfunction.zip*
+screenshots/.DS_Store
