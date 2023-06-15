@@ -74,7 +74,7 @@ resource "null_resource" "zip_code_for_cloud_function" {
     working_dir = "${path.module}"
     command = <<EOT
       cd ../cloud-function
-      zip -r ${local.names.code_zip} * -x "*.vscode*"
+      zip -r ${local.names.code_zip} * -x "*.vscode*" "*credentials.json"
       mv ${local.names.code_zip} ../setup/${local.names.code_zip}
     EOT
   }
